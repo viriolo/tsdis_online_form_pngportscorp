@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TSDIS – PNG Ports Corporation Consultation Questionnaire</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f5; }
+    h1 { color: #1F4E79; text-align: center; font-size: 24px; margin-bottom: 5px; }
+    h2 { color: #404040; text-align: center; font-size: 18px; font-weight: normal; margin-top: 0; }
+    fieldset { background: white; border: 1px solid #ddd; border-radius: 8px; padding: 25px; margin-bottom: 25px; }
+    legend { background: #1F4E79; color: white; padding: 10px 20px; border-radius: 5px; font-weight: bold; font-size: 16px; }
+    .sub-section { color: #2E75B6; font-size: 14px; font-weight: bold; margin: 20px 0 10px 0; border-bottom: 2px solid #2E75B6; padding-bottom: 5px; }
+    label { display: block; margin-top: 15px; font-weight: bold; color: #333; }
+    .context-text { font-style: italic; color: #666; font-size: 14px; margin-bottom: 15px; background: #f9f9f9; padding: 10px; border-left: 3px solid #2E75B6; }
+    .helper-text { font-style: italic; color: #666; font-size: 12px; margin-top: 5px; }
+    /* Conditional question containers */
+    .conditional-question { display: none; }
+    .conditional-question.visible { display: block; }
+    /* Other text input styling */
+    .other-text-input { display: none; width: auto; margin-left: 10px; flex: 1; }
+    .other-text-input.visible { display: inline-block; }
+    .radio-group label, .checkbox-group label { flex-wrap: wrap; }
+    .radio-group label .other-text-input, .checkbox-group label .other-text-input { margin-top: 5px; width: 100%; margin-left: 28px; }
+    input[type="text"], input[type="email"], input[type="tel"], input[type="number"], input[type="date"] {
+      width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; margin-top: 5px;
+    }
+    textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; margin-top: 5px; resize: vertical; }
+    select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; margin-top: 5px; background: white; }
+    .radio-group, .checkbox-group { margin: 10px 0; }
+    .radio-group label, .checkbox-group label { display: flex; align-items: center; font-weight: normal; margin: 8px 0; cursor: pointer; }
+    .radio-group input, .checkbox-group input { margin-right: 10px; width: 18px; height: 18px; }
+    table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+    th { background: #1F4E79; color: white; padding: 10px; text-align: left; font-size: 13px; }
+    td { border: 1px solid #ccc; padding: 8px; font-size: 13px; }
+    td input, td textarea, td select { width: 100%; border: none; padding: 5px; font-size: 13px; }
+    .required::after { content: " *"; color: #e74c3c; }
+    .welcome-box { background: #DEEAF6; border: 1px solid #5B9BD5; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+    .instructions-box { background: #FFF8E1; border: 1px solid #FFB300; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+    .thank-you-box { background: #E8F5E9; border: 2px solid #4CAF50; border-radius: 8px; padding: 25px; text-align: center; }
+    .info-table { width: 100%; margin: 15px 0; }
+    .info-table td { padding: 10px; border: 1px solid #ccc; }
+    .info-table td:first-child { background: #f5f5f5; font-weight: bold; width: 200px; }
+
+    /* Page visibility */
+    .form-page { display: none; }
+    .form-page.active { display: block; }
+
+    /* Progress bar */
+    .progress-container { background: #e0e0e0; border-radius: 10px; margin-bottom: 20px; height: 20px; overflow: hidden; }
+    .progress-bar { background: linear-gradient(90deg, #1F4E79, #2E75B6); height: 100%; transition: width 0.3s ease; border-radius: 10px; }
+    .progress-text { text-align: center; font-size: 12px; color: #666; margin-top: 5px; }
+
+    /* Navigation buttons */
+    .nav-buttons { display: flex; justify-content: space-between; align-items: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; }
+    .nav-buttons button { padding: 12px 30px; border: none; border-radius: 5px; font-size: 14px; cursor: pointer; transition: background 0.2s; }
+    .btn-back { background: #6c757d; color: white; }
+    .btn-back:hover { background: #5a6268; }
+    .btn-back:disabled { background: #ccc; cursor: not-allowed; }
+    .btn-next { background: #1F4E79; color: white; }
+    .btn-next:hover { background: #2E75B6; }
+    .btn-save { background: #28a745; color: white; }
+    .btn-save:hover { background: #218838; }
+    .btn-submit { background: #1F4E79; color: white; padding: 15px 40px; font-size: 16px; }
+    .btn-submit:hover { background: #2E75B6; }
+    .btn-start { background: #1F4E79; color: white; padding: 15px 40px; font-size: 16px; display: block; margin: 20px auto; }
+    .btn-start:hover { background: #2E75B6; }
+
+    /* Save notification */
+    .save-notification { position: fixed; top: 20px; right: 20px; background: #28a745; color: white; padding: 15px 25px; border-radius: 5px; display: none; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+    .save-notification.show { display: block; animation: fadeInOut 3s ease; }
+    @keyframes fadeInOut { 0% { opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { opacity: 0; } }
+
+    /* Saved data notice */
+    .saved-data-notice { background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 15px; border-radius: 5px; margin-bottom: 20px; display: none; }
+    .saved-data-notice.show { display: block; }
+    .saved-data-notice button { margin-left: 10px; padding: 5px 15px; background: #155724; color: white; border: none; border-radius: 3px; cursor: pointer; }
+
+    /* Validation error */
+    .validation-error { color: #e74c3c; font-size: 12px; margin-top: 5px; display: none; }
+    input:invalid, textarea:invalid, select:invalid { border-color: #e74c3c; }
+
+    /* Rating table specific styles */
+    .rating-table td { text-align: center; }
+    .rating-table td:first-child { text-align: left; }
+    .rating-table input[type="radio"] { width: 20px; height: 20px; }
+  </style>
+</head>
+<body>
+
+<div class="save-notification" id="saveNotification">Progress saved successfully!</div>
+
+<div class="saved-data-notice" id="savedDataNotice">
+  <strong>Welcome back!</strong> You have saved progress from a previous session.
+  <button onclick="clearSavedData()">Start Fresh</button>
+</div>
+
+<div class="progress-container">
+  <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+</div>
+<div class="progress-text" id="progressText">Page 1 of 17</div>
+
+<form name="tsdis-pngpc-questionnaire" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/success.html" id="mainForm">
+
+  <!-- Honeypot field for spam protection - hidden from users -->
+  <div style="display: none;">
+    <label>Don't fill this out if you're human:</label>
+    <input name="bot-field">
+  </div>
+
+  <!-- ==================== PAGE 0: WELCOME PAGE ==================== -->
+  <div class="form-page active" data-page="0">
+    <h1>Transport Sector Database and Information System (TSDIS)</h1>
+    <h2>PNG Ports Corporation – Consultation Questionnaire</h2>
+
+    <div class="welcome-box">
+      <p><strong>Project Authority:</strong> NEC Decision No. 289/2020</p>
+      <p><strong>Purpose:</strong> Following our consultation meeting on 8 December 2025, this questionnaire captures key details in writing to support our feasibility analysis. Your responses will directly inform TSDIS recommendations.</p>
+      <p>Your input is essential to ensure TSDIS meets your needs and supports your oversight and funding allocation functions effectively.</p>
+    </div>
+
+    <table class="info-table">
+      <tr>
+        <td>Estimated Completion Time</td>
+        <td>25–30 minutes</td>
+      </tr>
+      <tr>
+        <td>Save Progress</td>
+        <td>You can save and return to complete later</td>
+      </tr>
+      <tr>
+        <td>One Response Needed</td>
+        <td>One completed response from PNG Ports is sufficient</td>
+      </tr>
+    </table>
+
+    <div class="instructions-box">
+      <strong>Instructions:</strong>
+      <ul>
+        <li>Please answer as completely as possible based on your knowledge and experience</li>
+        <li>If you need to consult colleagues or check records, write <strong>"To be confirmed"</strong> and we will follow up</li>
+        <li>For technical questions, you may wish to consult with relevant colleagues</li>
+        <li>Your responses will be kept confidential and used solely for TSDIS planning purposes</li>
+      </ul>
+    </div>
+
+    <button type="button" class="btn-start" onclick="nextPage()">Begin Questionnaire</button>
+  </div>
+
+  <!-- ==================== PAGE 1: CONTACT INFORMATION ==================== -->
+  <div class="form-page" data-page="1">
+    <fieldset>
+      <legend>Contact Information</legend>
+
+      <label for="name" class="required">1. Name of respondent(s)</label>
+      <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+
+      <label for="position" class="required">2. Position/Title</label>
+      <input type="text" id="position" name="position" placeholder="e.g., IT Manager, Operations Manager" required>
+
+      <label for="email" class="required">3. Email Address</label>
+      <input type="email" id="email" name="email" placeholder="your.email@pngports.com.pg" required>
+
+      <label for="phone">4. Phone Number</label>
+      <input type="tel" id="phone" name="phone" placeholder="e.g., +675 xxx xxxx">
+    </fieldset>
+
+    <div class="nav-buttons">
+      <button type="button" class="btn-back" onclick="prevPage()">Back</button>
+      <button type="button" class="btn-save" onclick="saveProgress()">Save Progress</button>
+      <button type="button" class="btn-next" onclick="nextPage()">Next</button>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 2: SECTION 1A - EDI SYSTEM ==================== -->
+  <div class="form-page" data-page="2">
+    <fieldset>
+      <legend>Section 1: Systems & Data Capabilities</legend>
+
+      <div class="context-text">
+        <strong>Context:</strong> We discussed your EDI and terminal management systems during our meeting. These questions capture specific technical details for our analysis.
+      </div>
+
+      <div class="sub-section">1A. EDI System</div>
+
+      <label for="edi_formats" class="required">1.1. In what formats can data be exported from your EDI system?</label>
+      <p class="helper-text">e.g., CSV, Excel, XML, PDF reports, direct database query</p>
+      <textarea id="edi_formats" name="edi_formats" rows="3" placeholder="Describe the data export formats available..." required></textarea>
+
+      <label for="edi_api" class="required">1.2. Does the EDI system have API capabilities that could support automated data sharing with external systems? If yes, please describe.</label>
+      <textarea id="edi_api" name="edi_api" rows="3" placeholder="Describe API capabilities or indicate if not available..." required></textarea>
+    </fieldset>
+
+    <div class="nav-buttons">
+      <button type="button" class="btn-back" onclick="prevPage()">Back</button>
+      <button type="button" class="btn-save" onclick="saveProgress()">Save Progress</button>
+      <button type="button" class="btn-next" onclick="nextPage()">Next</button>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 3: SECTION 1B - TERMINAL MANAGEMENT SYSTEM ==================== -->
+  <div class="form-page" data-page="3">
+    <fieldset>
+      <legend>Section 1: Systems & Data Capabilities (continued)</legend>
+
+      <div class="sub-section">1B. Terminal Management System</div>
+
+      <label for="tms_description" class="required">1.3. Please describe the terminal management system PNG Ports uses – what functions does it perform and what data does it capture?</label>
+      <textarea id="tms_description" name="tms_description" rows="4" placeholder="Describe the system's functions and data captured..." required></textarea>
+
+      <label for="tms_edi_flow" class="required">1.4. How does data flow between the terminal management system and the EDI system?</label>
+      <p class="helper-text">e.g., automated sync, manual export/import, shared database</p>
+      <textarea id="tms_edi_flow" name="tms_edi_flow" rows="3" placeholder="Describe the data flow between systems..." required></textarea>
+
+      <label for="system_gaps">1.5. Are there any data gaps or integration challenges between these two systems?</label>
+      <textarea id="system_gaps" name="system_gaps" rows="3" placeholder="Describe any gaps or challenges..."></textarea>
+    </fieldset>
+
+    <div class="nav-buttons">
+      <button type="button" class="btn-back" onclick="prevPage()">Back</button>
+      <button type="button" class="btn-save" onclick="saveProgress()">Save Progress</button>
+      <button type="button" class="btn-next" onclick="nextPage()">Next</button>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 4: SECTION 2 - SYSTEM UPGRADE & CLOUD MIGRATION ==================== -->
+  <div class="form-page" data-page="4">
+    <fieldset>
+      <legend>Section 2: System Upgrade & Cloud Migration</legend>
+
+      <div class="context-text">
+        <strong>Context:</strong> You mentioned plans for a system upgrade. Understanding your direction helps ensure TSDIS recommendations align with your future state.
+      </div>
+
+      <label for="upgrade_description" class="required">2.1. Please describe your planned system upgrade or cloud migration, including the technology platform and vendor involvement:</label>
+      <textarea id="upgrade_description" name="upgrade_description" rows="4" placeholder="Describe the planned upgrade, platform, and vendors..." required></textarea>
+
+      <label for="upgrade_timeline" class="required">2.2. What is the expected timeline, and will the new system include enhanced data sharing or API capabilities?</label>
+      <textarea id="upgrade_timeline" name="upgrade_timeline" rows="3" placeholder="Describe expected timeline and capabilities..." required></textarea>
+
+      <label for="upgrade_risks">2.3. Are there any dependencies or risks that could affect this timeline?</label>
+      <textarea id="upgrade_risks" name="upgrade_risks" rows="3" placeholder="Describe any dependencies or risks..."></textarea>
+    </fieldset>
+
+    <div class="nav-buttons">
+      <button type="button" class="btn-back" onclick="prevPage()">Back</button>
+      <button type="button" class="btn-save" onclick="saveProgress()">Save Progress</button>
+      <button type="button" class="btn-next" onclick="nextPage()">Next</button>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 5: SECTION 3A - DEPARTMENT OF TRANSPORT ==================== -->
+  <div class="form-page" data-page="5">
+    <fieldset>
+      <legend>Section 3: Data Sharing & Stakeholder Relationships</legend>
+
+      <div class="sub-section">3A. Department of Transport</div>
+
+      <label for="dot_data_shared" class="required">3.1. What data does PNG Ports currently share with the Department of Transport (Maritime Division), and in what format?</label>
+      <textarea id="dot_data_shared" name="dot_data_shared" rows="4" placeholder="Describe data shared with DoT Maritime Division..." required></textarea>
+
+      <label for="dot_data_needed">3.2. What additional data would DoT find valuable that PNG Ports could potentially provide?</label>
+      <textarea id="dot_data_needed" name="dot_data_needed" rows="3" placeholder="Describe any additional data that could be valuable..."></textarea>
+    </fieldset>
+
+    <div class="nav-buttons">
+      <button type="button" class="btn-back" onclick="prevPage()">Back</button>
+      <button type="button" class="btn-save" onclick="saveProgress()">Save Progress</button>
+      <button type="button" class="btn-next" onclick="nextPage()">Next</button>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 6: SECTION 3B - ICTSI RELATIONSHIP ==================== -->
+  <div class="form-page" data-page="6">
+    <fieldset>
+      <legend>Section 3: Data Sharing & Stakeholder Relationships (continued)</legend>
+
+      <div class="sub-section">3B. ICTSI Relationship</div>
+
+      <label for="ictsi_data" class="required">3.3. What data does ICTSI provide to PNG Ports, and how is it consolidated into your reporting?</label>
+      <textarea id="ictsi_data" name="ictsi_data" rows="4" placeholder="Describe data received from ICTSI and how it's used..." required></textarea>
+    </fieldset>
+
+    <div class="nav-buttons">
+      <button type="button" class="btn-back" onclick="prevPage()">Back</button>
+      <button type="button" class="btn-save" onclick="saveProgress()">Save Progress</button>
+      <button type="button" class="btn-next" onclick="nextPage()">Next</button>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 7: SECTION 3C - PNG CUSTOMS & NSW ==================== -->
+  <div class="form-page" data-page="7">
+    <fieldset>
+      <legend>Section 3: Data Sharing & Stakeholder Relationships (continued)</legend>
+
+      <div class="sub-section">3C. PNG Customs & National Electronic Single Window</div>
+
+      <label for="nsw_involvement" class="required">3.4. Please describe PNG Ports' involvement in the National Electronic Single Window initiative – what systems or data will you contribute, and what is your understanding of the timeline?</label>
+      <textarea id="nsw_involvement" name="nsw_involvement" rows="4" placeholder="Describe involvement in NSW initiative, data contribution, and timeline understanding..." required></textarea>
+    </fieldset>
+
+    <div class="nav-buttons">
+      <button type="button" class="btn-back" onclick="prevPage()">Back</button>
+      <button type="button" class="btn-save" onclick="saveProgress()">Save Progress</button>
+      <button type="button" class="btn-next" onclick="nextPage()">Next</button>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 8: SECTION 3D - STAKEHOLDER MATRIX ==================== -->
+  <div class="form-page" data-page="8">
+    <fieldset>
+      <legend>Section 3: Data Sharing & Stakeholder Relationships (continued)</legend>
+
+      <div class="sub-section">3D. Stakeholder Data Exchange Summary</div>
+
+      <label class="required">3.5. Please complete the following matrix:</label>
+      <table>
+        <tr>
+          <th>Agency</th>
+          <th>Data Shared</th>
+          <th>Frequency</th>
+          <th>Format</th>
+          <th>MOU?</th>
+        </tr>
+        <tr>
+          <td style="background:#f5f5f5; font-weight:bold;">DoT Maritime Division</td>
+          <td><input type="text" name="stakeholder_dot_data" placeholder="Data shared"></td>
+          <td>
+            <select name="stakeholder_dot_frequency">
+              <option value="">Select...</option>
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+              <option value="quarterly">Quarterly</option>
+              <option value="annually">Annually</option>
+              <option value="adhoc">Ad-hoc</option>
+            </select>
+          </td>
+          <td><input type="text" name="stakeholder_dot_format" placeholder="Format"></td>
+          <td>
+            <select name="stakeholder_dot_mou">
+              <option value="">Select...</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+              <option value="in_progress">In Progress</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td style="background:#f5f5f5; font-weight:bold;">NMSA</td>
+          <td><input type="text" name="stakeholder_nmsa_data" placeholder="Data shared"></td>
+          <td>
+            <select name="stakeholder_nmsa_frequency">
+              <option value="">Select...</option>
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+              <option value="quarterly">Quarterly</option>
+              <option value="annually">Annually</option>
+              <option value="adhoc">Ad-hoc</option>
+            </select>
+          </td>
+          <td><input type="text" name="stakeholder_nmsa_format" placeholder="Format"></td>
+          <td>
+            <select name="stakeholder_nmsa_mou">
+              <option value="">Select...</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+              <option value="in_progress">In Progress</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td style="background:#f5f5f5; font-weight:bold;">PNG Customs</td>
+          <td><input type="text" name="stakeholder_customs_data" placeholder="Data shared"></td>
+          <td>
+            <select name="stakeholder_customs_frequency">
+              <option value="">Select...</option>
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+              <option value="quarterly">Quarterly</option>
+              <option value="annually">Annually</option>
+              <option value="adhoc">Ad-hoc</option>
+            </select>
+          </td>
+          <td><input type="text" name="stakeholder_customs_format" placeholder="Format"></td>
+          <td>
+            <select name="stakeholder_customs_mou">
+              <option value="">Select...</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+              <option value="in_progress">In Progress</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td style="background:#f5f5f5; font-weight:bold;">ICCC</td>
+          <td><input type="text" name="stakeholder_iccc_data" placeholder="Data shared"></td>
+          <td>
+            <select name="stakeholder_iccc_frequency">
+              <option value="">Select...</option>
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+              <option value="quarterly">Quarterly</option>
+              <option value="annually">Annually</option>
+              <option value="adhoc">Ad-hoc</option>
+            </select>
+          </td>
+          <td><input type="text" name="stakeholder_iccc_format" placeholder="Format"></td>
+          <td>
+            <select name="stakeholder_iccc_mou">
+              <option value="">Select...</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+              <option value="in_progress">In Progress</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td style="background:#f5f5f5; font-weight:bold;">Kumul Consolidated Holdings</td>
+          <td><input type="text" name="stakeholder_kch_data" placeholder="Data shared"></td>
+          <td>
+            <select name="stakeholder_kch_frequency">
+              <option value="">Select...</option>
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+              <option value="quarterly">Quarterly</option>
+              <option value="annually">Annually</option>
+              <option value="adhoc">Ad-hoc</option>
+            </select>
+          </td>
+          <td><input type="text" name="stakeholder_kch_format" placeholder="Format"></td>
+          <td>
+            <select name="stakeholder_kch_mou">
+              <option value="">Select...</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+              <option value="in_progress">In Progress</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td style="background:#f5f5f5; font-weight:bold;">Other:</td>
+          <td><input type="text" name="stakeholder_other_name" placeholder="Agency name"></td>
+          <td colspan="3"><input type="text" name="stakeholder_other_details" placeholder="Data, frequency, format, MOU status"></td>
+        </tr>
+      </table>
+    </fieldset>
+
+    <div class="nav-buttons">
+      <button type="button" class="btn-back" onclick="prevPage()">Back</button>
+      <button type="button" class="btn-save" onclick="saveProgress()">Save Progress</button>
+      <button type="button" class="btn-next" onclick="nextPage()">Next</button>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 9: SECTION 4 - ICCC REGULATORY REPORTING ==================== -->
+  <div class="form-page" data-page="9">
+    <fieldset>
+      <legend>Section 4: ICCC Regulatory Reporting</legend>
+
+      <div class="context-text">
+        <strong>Context:</strong> Your KPI data reported to ICCC may be relevant to TSDIS sector-wide performance monitoring.
+      </div>
+
+      <label for="iccc_kpis" class="required">4.1. What specific KPIs do you report to ICCC, and how frequently?</label>
+      <p class="helper-text">e.g., berth availability, vessel wait time, cargo throughput, turnaround time</p>
+      <textarea id="iccc_kpis" name="iccc_kpis" rows="4" placeholder="List the KPIs and reporting frequency..." required></textarea>
+
+      <label for="iccc_data_source" class="required">4.2. How is this KPI data generated – from operational systems or compiled manually?</label>
+      <textarea id="iccc_data_source" name="iccc_data_source" rows="3" placeholder="Describe how KPI data is generated..." required></textarea>
+
+      <label class="required">4.3. Would PNG Ports be comfortable sharing ICCC KPI data with DoT through TSDIS?</label>
+      <div class="radio-group">
+        <label><input type="radio" name="iccc_sharing" value="yes_no_concerns" required> Yes – no concerns</label>
+        <label><input type="radio" name="iccc_sharing" value="yes_with_controls"> Yes – with appropriate access controls</label>
+        <label><input type="radio" name="iccc_sharing" value="possibly"> Possibly – need to review with management</label>
+        <label><input type="radio" name="iccc_sharing" value="no_sensitive"> No – this data is commercially sensitive</label>
+        <label><input type="radio" name="iccc_sharing" value="other" data-reveals="iccc_sharing_other"> Other (please specify below)</label>
+      </div>
+
+      <div id="iccc-sharing-other-container" class="conditional-question iccc-sharing-conditional">
+        <label for="iccc_sharing_other">If other or concerns, please explain:</label>
+        <textarea id="iccc_sharing_other" name="iccc_sharing_other" rows="2" placeholder="Please explain..."></textarea>
+      </div>
+    </fieldset>
+
+    <div class="nav-buttons">
+      <button type="button" class="btn-back" onclick="prevPage()">Back</button>
+      <button type="button" class="btn-save" onclick="saveProgress()">Save Progress</button>
+      <button type="button" class="btn-next" onclick="nextPage()">Next</button>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 10: SECTION 5 - DATA QUALITY & GOVERNANCE ==================== -->
+  <div class="form-page" data-page="10">
+    <fieldset>
+      <legend>Section 5: Data Quality & Governance</legend>
+
+      <label for="data_responsibility" class="required">5.1. Who is responsible for data quality within PNG Ports? Is there a designated data steward or team?</label>
+      <textarea id="data_responsibility" name="data_responsibility" rows="3" placeholder="Identify the role/position or team responsible..." required></textarea>
+
+      <label for="data_validation" class="required">5.2. What data validation or quality checks does PNG Ports perform before releasing data?</label>
+      <textarea id="data_validation" name="data_validation" rows="3" placeholder="Describe validation and quality check processes..." required></textarea>
+
+      <label for="governance_policies">5.3. Does PNG Ports have formal data governance policies?</label>
+      <p class="helper-text">e.g., data access, security, retention, sharing protocols</p>
+      <textarea id="governance_policies" name="governance_policies" rows="3" placeholder="Describe any formal policies or indicate if none exist..."></textarea>
+
+      <label for="approval_process" class="required">5.4. What approval processes would be required before PNG Ports could share data through TSDIS?</label>
+      <p class="helper-text">e.g., board approval, management sign-off, legal review</p>
+      <textarea id="approval_process" name="approval_process" rows="3" placeholder="Describe the approval process required..." required></textarea>
+    </fieldset>
+
+    <div class="nav-buttons">
+      <button type="button" class="btn-back" onclick="prevPage()">Back</button>
+      <button type="button" class="btn-save" onclick="saveProgress()">Save Progress</button>
+      <button type="button" class="btn-next" onclick="nextPage()">Next</button>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 11: SECTION 6 - TSDIS REQUIREMENTS (CHALLENGES) ==================== -->
+  <div class="form-page" data-page="11">
+    <fieldset>
+      <legend>Section 6: TSDIS Requirements & Priorities</legend>
+
+      <label for="data_challenges" class="required">6.1. What are the biggest challenges PNG Ports currently faces with data management or reporting?</label>
+      <textarea id="data_challenges" name="data_challenges" rows="4" placeholder="Describe your main data management and reporting challenges..." required></textarea>
+
+      <label for="valuable_data">6.2. What data from other transport agencies would be valuable for PNG Ports to access?</label>
+      <p class="helper-text">e.g., vessel registration (NMSA), maritime safety records, inter-modal connections</p>
+      <textarea id="valuable_data" name="valuable_data" rows="4" placeholder="Describe data from other agencies that would be valuable..."></textarea>
+    </fieldset>
+
+    <div class="nav-buttons">
+      <button type="button" class="btn-back" onclick="prevPage()">Back</button>
+      <button type="button" class="btn-save" onclick="saveProgress()">Save Progress</button>
+      <button type="button" class="btn-next" onclick="nextPage()">Next</button>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 12: SECTION 6 - FEATURE RATING TABLE ==================== -->
+  <div class="form-page" data-page="12">
+    <fieldset>
+      <legend>Section 6: TSDIS Requirements & Priorities (continued)</legend>
+
+      <label class="required">6.3. Please rate how useful the following potential TSDIS features would be:</label>
+      <p class="helper-text">(1 = Not useful, 5 = Essential)</p>
+
+      <table class="rating-table">
+        <tr>
+          <th>Feature</th>
+          <th style="width:50px">1</th>
+          <th style="width:50px">2</th>
+          <th style="width:50px">3</th>
+          <th style="width:50px">4</th>
+          <th style="width:50px">5</th>
+        </tr>
+        <tr>
+          <td>Centralized dashboard showing sector-wide port statistics</td>
+          <td><input type="radio" name="feature_dashboard" value="1"></td>
+          <td><input type="radio" name="feature_dashboard" value="2"></td>
+          <td><input type="radio" name="feature_dashboard" value="3"></td>
+          <td><input type="radio" name="feature_dashboard" value="4"></td>
+          <td><input type="radio" name="feature_dashboard" value="5"></td>
+        </tr>
+        <tr>
+          <td>Access to vessel registration data from NMSA</td>
+          <td><input type="radio" name="feature_nmsa" value="1"></td>
+          <td><input type="radio" name="feature_nmsa" value="2"></td>
+          <td><input type="radio" name="feature_nmsa" value="3"></td>
+          <td><input type="radio" name="feature_nmsa" value="4"></td>
+          <td><input type="radio" name="feature_nmsa" value="5"></td>
+        </tr>
+        <tr>
+          <td>Integration with Customs/Single Window data</td>
+          <td><input type="radio" name="feature_customs" value="1"></td>
+          <td><input type="radio" name="feature_customs" value="2"></td>
+          <td><input type="radio" name="feature_customs" value="3"></td>
+          <td><input type="radio" name="feature_customs" value="4"></td>
+          <td><input type="radio" name="feature_customs" value="5"></td>
+        </tr>
+        <tr>
+          <td>Automated reporting to DoT (reducing manual submissions)</td>
+          <td><input type="radio" name="feature_auto_reporting" value="1"></td>
+          <td><input type="radio" name="feature_auto_reporting" value="2"></td>
+          <td><input type="radio" name="feature_auto_reporting" value="3"></td>
+          <td><input type="radio" name="feature_auto_reporting" value="4"></td>
+          <td><input type="radio" name="feature_auto_reporting" value="5"></td>
+        </tr>
+        <tr>
+          <td>Benchmarking data across PNG ports</td>
+          <td><input type="radio" name="feature_benchmarking" value="1"></td>
+          <td><input type="radio" name="feature_benchmarking" value="2"></td>
+          <td><input type="radio" name="feature_benchmarking" value="3"></td>
+          <td><input type="radio" name="feature_benchmarking" value="4"></td>
+          <td><input type="radio" name="feature_benchmarking" value="5"></td>
+        </tr>
+        <tr>
+          <td>Maritime safety and incident data</td>
+          <td><input type="radio" name="feature_safety" value="1"></td>
+          <td><input type="radio" name="feature_safety" value="2"></td>
+          <td><input type="radio" name="feature_safety" value="3"></td>
+          <td><input type="radio" name="feature_safety" value="4"></td>
+          <td><input type="radio" name="feature_safety" value="5"></td>
+        </tr>
+      </table>
+    </fieldset>
+
+    <div class="nav-buttons">
+      <button type="button" class="btn-back" onclick="prevPage()">Back</button>
+      <button type="button" class="btn-save" onclick="saveProgress()">Save Progress</button>
+      <button type="button" class="btn-next" onclick="nextPage()">Next</button>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 13: SECTION 6 - PRIORITIES ==================== -->
+  <div class="form-page" data-page="13">
+    <fieldset>
+      <legend>Section 6: TSDIS Requirements & Priorities (continued)</legend>
+
+      <label for="top_priority" class="required">6.4. If TSDIS could only address ONE data or reporting challenge for PNG Ports, what would be the most valuable?</label>
+      <textarea id="top_priority" name="top_priority" rows="4" placeholder="Describe the single most valuable improvement TSDIS could make..." required></textarea>
+    </fieldset>
+
+    <div class="nav-buttons">
+      <button type="button" class="btn-back" onclick="prevPage()">Back</button>
+      <button type="button" class="btn-save" onclick="saveProgress()">Save Progress</button>
+      <button type="button" class="btn-next" onclick="nextPage()">Next</button>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 14: SECTION 7 - IMPLEMENTATION CONCERNS ==================== -->
+  <div class="form-page" data-page="14">
+    <fieldset>
+      <legend>Section 7: Implementation Considerations</legend>
+
+      <label for="tsdis_concerns">7.1. What concerns, if any, does PNG Ports have about participating in TSDIS?</label>
+      <textarea id="tsdis_concerns" name="tsdis_concerns" rows="4" placeholder="Describe any concerns about TSDIS participation..."></textarea>
+
+      <label class="required">7.2. Please rate your level of concern about the following:</label>
+      <p class="helper-text">(1 = Not concerned, 5 = Very concerned)</p>
+
+      <table class="rating-table">
+        <tr>
+          <th>Concern</th>
+          <th style="width:50px">1</th>
+          <th style="width:50px">2</th>
+          <th style="width:50px">3</th>
+          <th style="width:50px">4</th>
+          <th style="width:50px">5</th>
+        </tr>
+        <tr>
+          <td>Data security and unauthorized access</td>
+          <td><input type="radio" name="concern_security" value="1"></td>
+          <td><input type="radio" name="concern_security" value="2"></td>
+          <td><input type="radio" name="concern_security" value="3"></td>
+          <td><input type="radio" name="concern_security" value="4"></td>
+          <td><input type="radio" name="concern_security" value="5"></td>
+        </tr>
+        <tr>
+          <td>System integration complexity with existing EDI</td>
+          <td><input type="radio" name="concern_integration" value="1"></td>
+          <td><input type="radio" name="concern_integration" value="2"></td>
+          <td><input type="radio" name="concern_integration" value="3"></td>
+          <td><input type="radio" name="concern_integration" value="4"></td>
+          <td><input type="radio" name="concern_integration" value="5"></td>
+        </tr>
+        <tr>
+          <td>Ongoing costs (licensing, support, maintenance)</td>
+          <td><input type="radio" name="concern_costs" value="1"></td>
+          <td><input type="radio" name="concern_costs" value="2"></td>
+          <td><input type="radio" name="concern_costs" value="3"></td>
+          <td><input type="radio" name="concern_costs" value="4"></td>
+          <td><input type="radio" name="concern_costs" value="5"></td>
+        </tr>
+      </table>
+    </fieldset>
+
+    <div class="nav-buttons">
+      <button type="button" class="btn-back" onclick="prevPage()">Back</button>
+      <button type="button" class="btn-save" onclick="saveProgress()">Save Progress</button>
+      <button type="button" class="btn-next" onclick="nextPage()">Next</button>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 15: SECTION 7 - TIMING & PILOT ==================== -->
+  <div class="form-page" data-page="15">
+    <fieldset>
+      <legend>Section 7: Implementation Considerations (continued)</legend>
+
+      <label for="ideal_timing">7.3. Given your planned system upgrade, what would be the ideal timing for TSDIS integration?</label>
+      <textarea id="ideal_timing" name="ideal_timing" rows="3" placeholder="Describe the ideal timing considering your system upgrade plans..."></textarea>
+
+      <label class="required">7.4. Would PNG Ports be interested in participating in a TSDIS pilot program?</label>
+      <div class="radio-group">
+        <label><input type="radio" name="pilot_interest" value="yes_active" required> Yes – we would actively participate</label>
+        <label><input type="radio" name="pilot_interest" value="yes_limited"> Yes – with limited scope initially</label>
+        <label><input type="radio" name="pilot_interest" value="possibly"> Possibly – depending on requirements and timing</label>
+        <label><input type="radio" name="pilot_interest" value="no"> No – not at this time</label>
+      </div>
+    </fieldset>
+
+    <div class="nav-buttons">
+      <button type="button" class="btn-back" onclick="prevPage()">Back</button>
+      <button type="button" class="btn-save" onclick="saveProgress()">Save Progress</button>
+      <button type="button" class="btn-next" onclick="nextPage()">Next</button>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 16: SECTION 8 - ADDITIONAL COMMENTS ==================== -->
+  <div class="form-page" data-page="16">
+    <fieldset>
+      <legend>Section 8: Additional Comments</legend>
+
+      <label for="additional_comments">8.1. Is there anything else we should know about PNG Ports' needs, processes, or constraints?</label>
+      <textarea id="additional_comments" name="additional_comments" rows="4" placeholder="Any additional information that would help us understand PNG Ports' situation..."></textarea>
+
+      <label for="other_contacts">8.2. Who else within PNG Ports should we consult to better understand your data and systems?</label>
+      <textarea id="other_contacts" name="other_contacts" rows="3" placeholder="Provide names, positions, and contact details if available..."></textarea>
+    </fieldset>
+
+    <div class="nav-buttons">
+      <button type="button" class="btn-back" onclick="prevPage()">Back</button>
+      <button type="button" class="btn-save" onclick="saveProgress()">Save Progress</button>
+      <button type="button" class="btn-submit" onclick="submitForm()">Submit Questionnaire</button>
+    </div>
+  </div>
+
+</form>
+
+<script>
+// Page navigation state
+let currentPage = 0;
+const totalPages = 17;
+const STORAGE_KEY = 'tsdis_pngpc_questionnaire_data';
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+  // Check for saved data
+  loadSavedData();
+
+  // Update progress bar
+  updateProgress();
+
+  // Initialize conditional logic
+  initConditionalLogic();
+
+  // Initialize "Other" field reveal logic
+  initOtherFieldLogic();
+});
+
+// Navigate to next page
+function nextPage() {
+  const currentPageEl = document.querySelector('.form-page[data-page="' + currentPage + '"]');
+
+  // Validate current page (except welcome page)
+  if (currentPage > 0 && !validatePage(currentPageEl)) {
+    return;
+  }
+
+  if (currentPage < totalPages - 1) {
+    currentPageEl.classList.remove('active');
+    currentPage++;
+    document.querySelector('.form-page[data-page="' + currentPage + '"]').classList.add('active');
+    updateProgress();
+    window.scrollTo(0, 0);
+
+    // Auto-save on page change
+    saveToLocalStorage();
+  }
+}
+
+// Navigate to previous page
+function prevPage() {
+  if (currentPage > 0) {
+    document.querySelector('.form-page[data-page="' + currentPage + '"]').classList.remove('active');
+    currentPage--;
+    document.querySelector('.form-page[data-page="' + currentPage + '"]').classList.add('active');
+    updateProgress();
+    window.scrollTo(0, 0);
+  }
+}
+
+// Validate current page
+function validatePage(pageEl) {
+  const requiredFields = pageEl.querySelectorAll('[required]');
+  let isValid = true;
+
+  requiredFields.forEach(function(field) {
+    // For radio buttons, check if any in the group is selected
+    if (field.type === 'radio') {
+      const radioGroup = pageEl.querySelectorAll('input[name="' + field.name + '"]');
+      const anyChecked = Array.from(radioGroup).some(r => r.checked);
+      if (!anyChecked) {
+        isValid = false;
+        // Highlight the radio group
+        field.closest('.radio-group').style.border = '2px solid #e74c3c';
+        field.closest('.radio-group').style.padding = '10px';
+        field.closest('.radio-group').style.borderRadius = '5px';
+      } else {
+        field.closest('.radio-group').style.border = 'none';
+        field.closest('.radio-group').style.padding = '0';
+      }
+    } else {
+      if (!field.value.trim()) {
+        isValid = false;
+        field.style.borderColor = '#e74c3c';
+      } else {
+        field.style.borderColor = '#ccc';
+      }
+    }
+  });
+
+  if (!isValid) {
+    alert('Please fill in all required fields before continuing.');
+  }
+
+  return isValid;
+}
+
+// Update progress bar
+function updateProgress() {
+  const progress = (currentPage / (totalPages - 1)) * 100;
+  document.getElementById('progressBar').style.width = progress + '%';
+  document.getElementById('progressText').textContent = 'Page ' + (currentPage + 1) + ' of ' + totalPages;
+}
+
+// Save progress to localStorage
+function saveProgress() {
+  saveToLocalStorage();
+  showSaveNotification();
+}
+
+function saveToLocalStorage() {
+  const form = document.getElementById('mainForm');
+  const formData = new FormData(form);
+  const data = {
+    currentPage: currentPage,
+    timestamp: new Date().toISOString(),
+    fields: {}
+  };
+
+  // Save all form fields
+  for (let [key, value] of formData.entries()) {
+    if (data.fields[key]) {
+      // Handle multiple values (checkboxes)
+      if (Array.isArray(data.fields[key])) {
+        data.fields[key].push(value);
+      } else {
+        data.fields[key] = [data.fields[key], value];
+      }
+    } else {
+      data.fields[key] = value;
+    }
+  }
+
+  // Also save checkbox states explicitly
+  document.querySelectorAll('input[type="checkbox"]').forEach(function(cb) {
+    if (cb.checked && !data.fields[cb.name]) {
+      data.fields[cb.name] = cb.value;
+    }
+  });
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+function showSaveNotification() {
+  const notification = document.getElementById('saveNotification');
+  notification.classList.add('show');
+  setTimeout(function() {
+    notification.classList.remove('show');
+  }, 3000);
+}
+
+// Load saved data from localStorage
+function loadSavedData() {
+  const savedData = localStorage.getItem(STORAGE_KEY);
+
+  if (savedData) {
+    const data = JSON.parse(savedData);
+
+    // Show the "Welcome back" notice
+    document.getElementById('savedDataNotice').classList.add('show');
+
+    // Restore current page
+    if (data.currentPage > 0) {
+      document.querySelector('.form-page[data-page="0"]').classList.remove('active');
+      currentPage = data.currentPage;
+      document.querySelector('.form-page[data-page="' + currentPage + '"]').classList.add('active');
+    }
+
+    // Restore form fields
+    for (let [key, value] of Object.entries(data.fields)) {
+      const elements = document.querySelectorAll('[name="' + key + '"]');
+
+      elements.forEach(function(el) {
+        if (el.type === 'checkbox') {
+          // Handle checkboxes
+          if (Array.isArray(value)) {
+            el.checked = value.includes(el.value);
+          } else {
+            el.checked = el.value === value;
+          }
+        } else if (el.type === 'radio') {
+          // Handle radio buttons
+          el.checked = el.value === value;
+        } else {
+          // Handle text inputs, textareas, selects
+          el.value = value;
+        }
+      });
+    }
+
+    // Re-initialize conditional logic after loading data
+    setTimeout(function() {
+      initConditionalLogic();
+      initOtherFieldLogic();
+    }, 100);
+  }
+}
+
+// Clear saved data
+function clearSavedData() {
+  localStorage.removeItem(STORAGE_KEY);
+  document.getElementById('savedDataNotice').classList.remove('show');
+
+  // Reset form
+  document.getElementById('mainForm').reset();
+
+  // Go back to first page
+  document.querySelector('.form-page.active').classList.remove('active');
+  currentPage = 0;
+  document.querySelector('.form-page[data-page="0"]').classList.add('active');
+  updateProgress();
+}
+
+// Initialize conditional logic for Q4.3 (ICCC sharing)
+function initConditionalLogic() {
+  // Q4.3 conditional logic - show/hide "other" explanation
+  const icccSharingRadios = document.querySelectorAll('input[name="iccc_sharing"]');
+  const icccConditionalQuestion = document.querySelector('.iccc-sharing-conditional');
+
+  function updateIcccConditional() {
+    const selectedValue = document.querySelector('input[name="iccc_sharing"]:checked');
+    const showQuestion = selectedValue && selectedValue.value === 'other';
+
+    if (icccConditionalQuestion) {
+      if (showQuestion) {
+        icccConditionalQuestion.classList.add('visible');
+      } else {
+        icccConditionalQuestion.classList.remove('visible');
+      }
+    }
+  }
+
+  icccSharingRadios.forEach(function(radio) {
+    radio.addEventListener('change', updateIcccConditional);
+  });
+
+  updateIcccConditional();
+}
+
+// Initialize "Other" text field reveal logic
+function initOtherFieldLogic() {
+  const revealTriggers = document.querySelectorAll('[data-reveals]');
+
+  revealTriggers.forEach(function(trigger) {
+    const targetName = trigger.getAttribute('data-reveals');
+    const targetInput = document.querySelector('input[name="' + targetName + '"]');
+
+    if (targetInput) {
+      function updateVisibility() {
+        if (trigger.checked) {
+          targetInput.classList.add('visible');
+        } else {
+          targetInput.classList.remove('visible');
+          targetInput.value = '';
+        }
+      }
+
+      trigger.addEventListener('change', updateVisibility);
+      updateVisibility();
+    }
+  });
+}
+
+// Submit form with validation across all pages
+function submitForm() {
+  const form = document.getElementById('mainForm');
+  let allValid = true;
+  let firstInvalidPage = -1;
+
+  // Validate all pages
+  for (let i = 1; i < totalPages; i++) {
+    const pageEl = document.querySelector('.form-page[data-page="' + i + '"]');
+    if (pageEl) {
+      const requiredFields = pageEl.querySelectorAll('[required]');
+
+      requiredFields.forEach(function(field) {
+        if (field.type === 'radio') {
+          const radioGroup = document.querySelectorAll('input[name="' + field.name + '"]');
+          const anyChecked = Array.from(radioGroup).some(r => r.checked);
+          if (!anyChecked) {
+            allValid = false;
+            if (firstInvalidPage === -1) firstInvalidPage = i;
+          }
+        } else {
+          if (!field.value.trim()) {
+            allValid = false;
+            if (firstInvalidPage === -1) firstInvalidPage = i;
+          }
+        }
+      });
+    }
+  }
+
+  if (!allValid) {
+    // Navigate to the first page with errors
+    document.querySelector('.form-page.active').classList.remove('active');
+    currentPage = firstInvalidPage;
+    document.querySelector('.form-page[data-page="' + currentPage + '"]').classList.add('active');
+    updateProgress();
+    window.scrollTo(0, 0);
+
+    // Trigger validation display on that page
+    const pageEl = document.querySelector('.form-page[data-page="' + currentPage + '"]');
+    validatePage(pageEl);
+
+    alert('Please complete all required fields. You have been taken to the first page with missing information.');
+    return;
+  }
+
+  // All valid - clear saved data and submit
+  localStorage.removeItem(STORAGE_KEY);
+  form.submit();
+}
+</script>
+
+</body>
+</html>
